@@ -1,5 +1,5 @@
-#ifndef __DataFormats_DiTauCandidate_h__
-#define __DataFormats_DiTauCandidate_h__
+#ifndef __AnalysisDataFormats_TauAnalysis_DiTauCandidate_h__
+#define __AnalysisDataFormats_TauAnalysis_DiTauCandidate_h__
 
 #include <vector>
 #include <string>
