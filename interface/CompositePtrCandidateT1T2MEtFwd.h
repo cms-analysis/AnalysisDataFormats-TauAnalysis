@@ -1,7 +1,7 @@
-#ifndef AnalysisDataFormats_TauAnalysis_CompositeRefCandidateT1T2MEtFwd_h
-#define AnalysisDataFormats_TauAnalysis_CompositeRefCandidateT1T2MEtFwd_h
+#ifndef AnalysisDataFormats_TauAnalysis_CompositePtrCandidateT1T2MEtFwd_h
+#define AnalysisDataFormats_TauAnalysis_CompositePtrCandidateT1T2MEtFwd_h
 
-#include "AnalysisDataFormats/TauAnalysis/interface/CompositeRefCandidateT1T2MEt.h"
+#include "AnalysisDataFormats/TauAnalysis/interface/CompositePtrCandidateT1T2MEt.h"
 
 #include "DataFormats/Common/interface/Ref.h"
 #include "DataFormats/Common/interface/RefProd.h"

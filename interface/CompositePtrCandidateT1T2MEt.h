@@ -14,48 +14,46 @@
  *
  * \version $Revision: 1.1 $
  *
- * $Id: CompositeRefCandidateT1T2MEt.h,v 1.1 2009/01/29 13:22:18 veelken Exp $
+ * $Id: CompositeRefCandidateT1T2MEt.h,v 1.1 2009/02/04 15:37:00 veelken Exp $
  *
  */
 
 #include "DataFormats/Candidate/interface/CandidateFwd.h" 
 #include "DataFormats/Candidate/interface/Candidate.h" 
 #include "DataFormats/Candidate/interface/LeafCandidate.h" 
-#include "DataFormats/Common/interface/Ref.h"
+#include "DataFormats/Common/interface/Ptr.h"
 
 template<typename T1, typename T2>
-class CompositeRefCandidateT1T2MEt : public reco::LeafCandidate 
+class CompositePtrCandidateT1T2MEt : public reco::LeafCandidate 
 {
-  typedef std::vector<T1> T1Collection;
-  typedef edm::Ref<T1Collection> T1Ref;
-  typedef std::vector<T2> T2Collection;
-  typedef edm::Ref<T2Collection> T2Ref;
+  typedef edm::Ptr<T1> T1Ptr;
+  typedef edm::Ptr<T2> T2Ptr;
 
  public:
 
   /// default constructor
-  CompositeRefCandidateT1T2MEt() {}
+  CompositePtrCandidateT1T2MEt() {}
 
   /// constructor with MEt
-  CompositeRefCandidateT1T2MEt(const T1Ref leg1, const T2Ref leg2, const reco::CandidatePtr met)
+  CompositePtrCandidateT1T2MEt(const T1Ptr leg1, const T2Ptr leg2, const reco::CandidatePtr met)
     : leg1_(leg1), leg2_(leg2), met_(met) {}
 
   /// constructor without MEt
-  CompositeRefCandidateT1T2MEt(const T1Ref leg1, const T2Ref leg2)
+  CompositePtrCandidateT1T2MEt(const T1Ptr leg1, const T2Ptr leg2)
     : leg1_(leg1), leg2_(leg2) {}
 
   /// destructor
-  ~CompositeRefCandidateT1T2MEt() {}
+  ~CompositePtrCandidateT1T2MEt() {}
 
   /// access to daughter particles
-  const T1Ref leg1() const { return leg1_; }
-  const T2Ref leg2() const { return leg2_; }
+  const T1Ptr leg1() const { return leg1_; }
+  const T2Ptr leg2() const { return leg2_; }
  
   /// access to missing transverse momentum
   const reco::CandidatePtr met() const { return met_; }
 
   // get sum of charge of visible decay products
-  // (not need to declare it in CompositeRefCandidateT1T2MEt; 
+  // (not need to declare it in CompositePtrCandidateT1T2MEt; 
   //  already declared in Candidate base-class)
 
   /// get four-momentum of visible decay products
@@ -96,12 +94,12 @@ class CompositeRefCandidateT1T2MEt : public reco::LeafCandidate
   double dPhi2MET() const { return dPhi2MET_; }
 
   /// clone  object
-  CompositeRefCandidateT1T2MEt<T1,T2>* clone() const { return new CompositeRefCandidateT1T2MEt<T1,T2>(*this); }
+  CompositePtrCandidateT1T2MEt<T1,T2>* clone() const { return new CompositePtrCandidateT1T2MEt<T1,T2>(*this); }
 
  private:
   
-  /// allow only CompositeRefCandidateT1T2MEtAlgorithm to change values of data-members
-  template<typename T1_type, typename T2_type> friend class CompositeRefCandidateT1T2MEtAlgorithm; 
+  /// allow only CompositePtrCandidateT1T2MEtAlgorithm to change values of data-members
+  template<typename T1_type, typename T2_type> friend class CompositePtrCandidateT1T2MEtAlgorithm; 
 
   /// set four-momentum of visible decay products
   void setP4Vis(const reco::Candidate::LorentzVector& p4) { p4Vis_ = p4; } 
@@ -136,8 +134,8 @@ class CompositeRefCandidateT1T2MEt : public reco::LeafCandidate
   void setDPhi2MET(double dPhi) { dPhi2MET_ = dPhi; }
 
   /// references/pointers to decay products
-  T1Ref leg1_;
-  T2Ref leg2_;
+  T1Ptr leg1_;
+  T2Ptr leg2_;
   reco::CandidatePtr met_;
 
   /// four-momentum of visible decay products
@@ -171,10 +169,10 @@ class CompositeRefCandidateT1T2MEt : public reco::LeafCandidate
 #include "DataFormats/PatCandidates/interface/Muon.h"
 #include "DataFormats/PatCandidates/interface/Tau.h"
 
-typedef CompositeRefCandidateT1T2MEt<reco::Candidate, reco::Candidate> DiCandidatePair;
-typedef CompositeRefCandidateT1T2MEt<pat::Electron, pat::Tau> PATElecTauPair;
-typedef CompositeRefCandidateT1T2MEt<pat::Muon, pat::Tau> PATMuTauPair;
-typedef CompositeRefCandidateT1T2MEt<pat::Tau, pat::Tau> PATDiTauPair;
-typedef CompositeRefCandidateT1T2MEt<pat::Electron, pat::Muon> PATElecMuPair;
+typedef CompositePtrCandidateT1T2MEt<reco::Candidate, reco::Candidate> DiCandidatePair;
+typedef CompositePtrCandidateT1T2MEt<pat::Electron, pat::Tau> PATElecTauPair;
+typedef CompositePtrCandidateT1T2MEt<pat::Muon, pat::Tau> PATMuTauPair;
+typedef CompositePtrCandidateT1T2MEt<pat::Tau, pat::Tau> PATDiTauPair;
+typedef CompositePtrCandidateT1T2MEt<pat::Electron, pat::Muon> PATElecMuPair;
 
 #endif
