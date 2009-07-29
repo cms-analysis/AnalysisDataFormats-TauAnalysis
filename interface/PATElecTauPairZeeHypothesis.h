@@ -9,9 +9,9 @@
  * 
  * \author Christian Veelken, UC Davis
  *
- * \version $Revision: 1.2 $
+ * \version $Revision: 1.1 $
  *
- * $Id: PATElecTauPairZeeHypothesis.h,v 1.2 2009/07/16 14:13:33 veelken Exp $
+ * $Id: PATElecTauPairZeeHypothesis.h,v 1.1 2009/07/17 14:19:07 veelken Exp $
  *
  */
 
@@ -65,6 +65,9 @@ class PATElecTauPairZeeHypothesis
   int typeElec1bestMatch() const { return typeElec1bestMatch_; }
   const reco::Particle::LorentzVector& p4Elec2bestMatch() const { return p4Elec2bestMatch_; }
   int typeElec2bestMatch() const { return typeElec2bestMatch_; }
+
+  /// get four-momentum of hypothetic Z0
+  const reco::Candidate::LorentzVector p4Z0bestMatch() const { return (p4Elec1bestMatch_ + p4Elec2bestMatch_); }
 
   /// access to CaloJet, PFJet, recoTrack, gsfElectron, gsfTrack
   /// matched to first electron
