@@ -4,7 +4,7 @@ std::ostream& operator<<(std::ostream& stream, const SVmassRecoSolution& solutio
 {
   stream << "<SVmassRecoSolution::print>:" << std::endl;
   stream << " rank = " << solution.rank() << ": log-likelihood = " << solution.logLikelihood() << std::endl;
-  stream << " (results of Migrad fit = " << solution.migradStatus() << ", SV fit = " << solution.migradStatus() << ")" << std::endl;
+  stream << " (status of Migrad fit = " << solution.migradStatus() << ", SV fit = " << solution.svFitStatus() << ")" << std::endl;
   stream << " leg 1: Pt = " << solution.p4VisLeg1().pt()/solution.x1() << "," 
 	 << " eta = " << solution.p4VisLeg1().eta() << "," << " phi = " << solution.p4VisLeg1().phi() << std::endl;  
   stream << " (x1 = " << solution.x1() << ", mScale1 = " << solution.mScale1() << ")" << std::endl;
