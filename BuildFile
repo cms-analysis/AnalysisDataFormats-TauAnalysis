@@ -3,6 +3,7 @@
 <use name=DataFormats/METReco>
 <use name=DataFormats/TauReco>
 <use name=DataFormats/PatCandidates>
+<use name=FWCore/MessageLogger>
 <use name=rootrflx>
 <export>
   <lib name=AnalysisDataFormatsTauAnalysis>
@@ -11,5 +12,6 @@
   <use name=DataFormats/METReco>
   <use name=DataFormats/TauReco>
   <use name=DataFormats/PatCandidates>
+  <use name=FWCore/MessageLogger>
   <use name=rootrflx>
 </export>
