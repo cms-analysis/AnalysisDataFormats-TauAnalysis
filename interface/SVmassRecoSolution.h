@@ -9,14 +9,15 @@
  * \authors Evan K. Friis,
  *          Christian Veelken (UC Davis)
  *
- * \version $Revision: 1.8 $
+ * \version $Revision: 1.1 $
  *
- * $Id: SVmassRecoSolution.h,v 1.8 2010/03/29 17:05:33 veelken Exp $
+ * $Id: SVmassRecoSolution.h,v 1.1 2010/03/31 16:22:40 veelken Exp $
  *
  */
 
 #include "DataFormats/Candidate/interface/CandidateFwd.h" 
 #include "DataFormats/Candidate/interface/Candidate.h" 
+#include "DataFormats/GeometryVector/interface/GlobalPoint.h"
 
 // "forward" declaration of SVmassRecoFitter algorithm
 // (needed in order to declare SVmassRecoFitter as friend)
@@ -44,12 +45,25 @@ class SVmassRecoSolution
   /// (recomputed at secondary vertex)
   const reco::Candidate::LorentzVector& p4VisLeg1() const { return p4VisLeg1_; };
   const reco::Candidate::LorentzVector& p4VisLeg2() const { return p4VisLeg2_; };
+
+  const reco::Candidate::LorentzVector& p4Leg1() const { return p4Leg1_; };
+  const reco::Candidate::LorentzVector& p4Leg2() const { return p4Leg2_; };
+
+  reco::Candidate::LorentzVector p4InvisLeg1() const { return p4Leg1_ - p4VisLeg1_; };
+  reco::Candidate::LorentzVector p4InvisLeg2() const { return p4Leg2_ - p4VisLeg2_; };
+
+  /// get four-momentum computed by SV method
+  const reco::Candidate::LorentzVector& p4() const { return p4SVmethod_; };
+  /// Invisible four-momentum
+  reco::Candidate::LorentzVector p4Invis() const { return p4InvisLeg1() + p4InvisLeg2(); };
+
+  /// Decay angle of visible decay products in tau rest frame
+  double restFrameVisThetaLeg1() const { return restFrameVisThetaLeg1_; };
+  double restFrameVisThetaLeg2() const { return restFrameVisThetaLeg2_; };
   /// get scaling factors for momenta of visible decay products
   /// computed by SV method
   double x1() const { return x1_; }
   double x2() const { return x2_; }
-  /// get four-momentum computed by SV method
-  const reco::Candidate::LorentzVector& p4() const { return p4SVmethod_; };
   /// get positions of reconstructed primary event vertex 
   /// and of reconstructed tau decay vertices
   const reco::Candidate::Point& primaryVertexPosSVrefitted() const { return primaryVertexPosSVrefitted_; }
@@ -75,6 +89,12 @@ class SVmassRecoSolution
   bool operator<(const SVmassRecoSolution& rhs) const { return (nll_ < rhs.nll_); }
 
  private:
+
+  reco::Candidate::Point convertPointType(const GlobalPoint& gp)
+  {
+     return reco::Candidate::Point(
+           gp.x(), gp.y(), gp.z());
+  }
   
   /// allow only SVmassRecoFitter to change values of data-members
   template<typename T1_type, typename T2_type> friend class svMassReco::SVmassRecoFitter; 
@@ -82,12 +102,21 @@ class SVmassRecoSolution
   /// set variables computed by secondary vertex based mass reconstruction
   void setP4VisLeg1(const reco::Candidate::LorentzVector& p4VisLeg1) { p4VisLeg1_ = p4VisLeg1; }
   void setP4VisLeg2(const reco::Candidate::LorentzVector& p4VisLeg2) { p4VisLeg2_ = p4VisLeg2; }
+  void setP4Leg1(const reco::Candidate::LorentzVector& p4Leg1) { p4Leg1_ = p4Leg1; }
+  void setP4Leg2(const reco::Candidate::LorentzVector& p4Leg2) { p4Leg2_ = p4Leg2; }
   void setX1(double x1) { x1_ = x1; }
   void setX2(double x2) { x2_ = x2; }
+  void setRestFrameVisThetaLeg1(double val) { restFrameVisThetaLeg1_ = val; };
+  void setRestFrameVisThetaLeg2(double val) { restFrameVisThetaLeg2_ = val; };
   void setP4(const reco::Candidate::LorentzVector& p4) { p4SVmethod_ = p4; }
   void setSVrefittedPrimaryVertexPos(const reco::Candidate::Point& pos) { primaryVertexPosSVrefitted_ = pos; }
   void setDecayVertexPosLeg1(const reco::Candidate::Point& pos) { decayVertexPosLeg1_ = pos; }
   void setDecayVertexPosLeg2(const reco::Candidate::Point& pos) { decayVertexPosLeg2_ = pos; }
+  //
+  void setSVrefittedPrimaryVertexPos(const GlobalPoint& pos) { primaryVertexPosSVrefitted_ = convertPointType(pos); }
+  void setDecayVertexPosLeg1(const GlobalPoint& pos) { decayVertexPosLeg1_ = convertPointType(pos); }
+  void setDecayVertexPosLeg2(const GlobalPoint& pos) { decayVertexPosLeg2_ = convertPointType(pos); }
+  //
   void setIsValidSolution(bool isValid) { isValidSolution_ = isValid; }
   void setMigradStatus(int result) { migradStatus_ = result; }
   void setSVfitStatus(int result) { svFitStatus_ = result; }
@@ -101,9 +130,14 @@ class SVmassRecoSolution
   /// (recomputed at secondary vertex)
   reco::Candidate::LorentzVector p4VisLeg1_;
   reco::Candidate::LorentzVector p4VisLeg2_;
+
+  reco::Candidate::LorentzVector p4Leg1_;
+  reco::Candidate::LorentzVector p4Leg2_;
   /// scaling factors for momenta of visible decay products
   double x1_;
   double x2_;
+  double restFrameVisThetaLeg1_;
+  double restFrameVisThetaLeg2_;
   /// four-momentum of di-tau system computed by SV method
   reco::Candidate::LorentzVector p4SVmethod_;
   /// positions of reconstructed primary event vertex 
