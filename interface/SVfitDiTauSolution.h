@@ -35,12 +35,12 @@ class SVfitDiTauSolution
  private:
   /// position of primary event vertex (tau lepton production vertex);
   /// refitted by SVfit algorithm after excluding from fit tracks associated to tau lepton decay products
-  const reco::Candidate::Point eventVertexPosition_;
-  const reco::Candidate::Point eventVertexPositionCorr_;
+  reco::Candidate::Point eventVertexPosition_;
+  reco::Candidate::Point eventVertexPositionCorr_;
 
   /// individual tau lepton decay "legs"
-  const SVfitLegSolution leg1_;
-  const SVfitLegSolution leg2_;
+  SVfitLegSolution leg1_;
+  SVfitLegSolution leg2_;
 
   /// likelihood values of individual plugins
   /// used by SVfit to reconstruct this solution
