@@ -39,8 +39,8 @@ class SVfitDiTauSolution
   const reco::Candidate::Point eventVertexPositionCorr_;
 
   /// individual tau lepton decay "legs"
-  const SVfitLegSolution& leg1_;
-  const SVfitLegSolution& leg2_;
+  const SVfitLegSolution leg1_;
+  const SVfitLegSolution leg2_;
 
   /// likelihood values of individual plugins
   /// used by SVfit to reconstruct this solution
