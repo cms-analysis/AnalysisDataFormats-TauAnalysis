@@ -6,11 +6,14 @@
 class SVfitLegSolution 
 {
  public:
-  enum polarizationHypothesisType { kLeftHanded, kRightHanded };
+  enum polarizationHypothesisType { kLeftHanded, kRightHanded, kUnknown };
 
   SVfitLegSolution(polarizationHypothesisType);
   ~SVfitLegSolution();
   
+  /// access to polarization hypothesis used by SVfit in reconstruction of this solution
+  polarizationHypothesisType polarizationHypothesis() const { return polarizationHypothesis_; }
+
   /// access to momentum of visible decay products,
   /// in laboratory and tau lepton rest-frame
   const reco::Candidate::LorentzVector& p4Vis() const { return p4Vis_; }
