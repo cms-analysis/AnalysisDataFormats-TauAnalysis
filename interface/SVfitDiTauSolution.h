@@ -2,18 +2,18 @@
 #define AnalysisDataFormats_TauAnalysis_SVfitDiTauSolution_h
 
 #include "AnalysisDataFormats/TauAnalysis/interface/SVfitLegSolution.h"
+#include "AnalysisDataFormats/TauAnalysis/interface/tauAnalysisAuxFunctions.h"
 
 #include "DataFormats/Candidate/interface/Candidate.h"
 
-#include "TauAnalysis/CandidateTools/interface/svFitAuxFunctions.h"
-
 #include <string>
 
-using namespace SVfit_namespace;
+using namespace TauAnalysis_namespace;
 
 class SVfitDiTauSolution 
 {
  public:
+  SVfitDiTauSolution();
   SVfitDiTauSolution(SVfitLegSolution::polarizationHypothesisType, SVfitLegSolution::polarizationHypothesisType);
   ~SVfitDiTauSolution();
 
@@ -29,6 +29,22 @@ class SVfitDiTauSolution
   /// used by SVfit to reconstruct this solution
   double logLikelihood() const;
   double logLikelihood(const std::string&) const;
+
+  std::string polarizationHypothesisName() const
+  {
+    SVfitLegSolution::polarizationHypothesisType leg1PolarizationHypothesis = leg1_.polarizationHypothesis();
+    SVfitLegSolution::polarizationHypothesisType leg2PolarizationHypothesis = leg2_.polarizationHypothesis();
+  
+    if      ( leg1PolarizationHypothesis == SVfitLegSolution::kLeftHanded  && 
+	      leg2PolarizationHypothesis == SVfitLegSolution::kLeftHanded  ) return "LL";
+    else if ( leg1PolarizationHypothesis == SVfitLegSolution::kLeftHanded  && 
+              leg2PolarizationHypothesis == SVfitLegSolution::kRightHanded ) return "LR";
+    else if ( leg1PolarizationHypothesis == SVfitLegSolution::kRightHanded && 
+	      leg2PolarizationHypothesis == SVfitLegSolution::kLeftHanded  ) return "RL";
+    else if ( leg1PolarizationHypothesis == SVfitLegSolution::kRightHanded  && 
+              leg2PolarizationHypothesis == SVfitLegSolution::kRightHanded ) return "RR";
+    else return "Unknown";
+  }
 
   template<typename T1, typename T2> friend class SVfitAlgorithm;
 
