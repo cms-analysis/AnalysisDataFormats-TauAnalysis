@@ -30,7 +30,7 @@ class SVfitLegSolution
   /// reconstructed by SVfit algorithm
   double flightDistance() const { return flightDistance_; }
 
-  friend class SVfitAlgorithm;
+  template<typename T1, typename T2> friend class SVfitAlgorithm;
 
  private:
 

@@ -21,17 +21,12 @@ class SVfitDiTauSolution
   const SVfitLegSolution& leg1() const { return leg1_; }
   const SVfitLegSolution& leg2() const { return leg2_; }
 
-  /// access to missing transverse momentum
-  /// refitted by SVfit algorithm
-  double metPx() const { return metPx_; }
-  double metPy() const { return metPy_; }
-
   /// access likelihood values of all/individual plugins
   /// used by SVfit to reconstruct this solution
   double logLikelihood() const;
   double logLikelihood(const std::string&) const;
 
-  friend class SVfitAlgorithm;
+  template<typename T1, typename T2> friend class SVfitAlgorithm;
 
  private:
   /// position of primary event vertex (tau lepton production vertex);
@@ -42,14 +37,13 @@ class SVfitDiTauSolution
   const SVfitLegSolution& leg1_;
   const SVfitLegSolution& leg2_;
 
-  /// missing transverse momentum
-  /// refitted by SVfit algorithm
-  double metPx_;
-  double metPy_; 
-
   /// likelihood values of individual plugins
   /// used by SVfit to reconstruct this solution
-    std::map<std::string, double> logLikelihoods_; // key = name of plugin; value = log(likelihood)
+  std::map<std::string, double> logLikelihoods_; // key = name of plugin; value = log(likelihood)
+
+  /// convergence status of Minuit log-likelihood minimization
+  /// (1 = fit suceeded to converge, 0 = fit failed to converged)
+  int minuitStatus_;
 };
 
 #endif
