@@ -8,6 +8,7 @@ class SVfitLegSolution
  public:
   enum polarizationHypothesisType { kLeftHanded, kRightHanded, kUnknown };
 
+  SVfitLegSolution();
   SVfitLegSolution(polarizationHypothesisType);
   ~SVfitLegSolution();
   
@@ -32,7 +33,6 @@ class SVfitLegSolution
   template<typename T1, typename T2> friend class SVfitAlgorithm;
 
  private:
-
   /// polarization hypothesis used by SVfit in reconstruction of this solution
   polarizationHypothesisType polarizationHypothesis_;
 

@@ -2,6 +2,9 @@
 
 #include "FWCore/MessageLogger/interface/MessageLogger.h"
 
+SVfitDiTauSolution::SVfitDiTauSolution()
+{}
+
 SVfitDiTauSolution::SVfitDiTauSolution(SVfitLegSolution::polarizationHypothesisType leg1PolarizationHypothesis, 
 				       SVfitLegSolution::polarizationHypothesisType leg2PolarizationHypothesis)
   : leg1_(leg1PolarizationHypothesis),
