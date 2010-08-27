@@ -5,7 +5,11 @@
 
 #include "DataFormats/Candidate/interface/Candidate.h"
 
+#include "TauAnalysis/CandidateTools/interface/svFitAuxFunctions.h"
+
 #include <string>
+
+using namespace SVfit_namespace;
 
 class SVfitDiTauSolution 
 {
@@ -15,7 +19,7 @@ class SVfitDiTauSolution
 
   /// access to position of primary event vertex (tau lepton production vertex);
   /// refitted by SVfit algorithm after excluding from fit tracks associated to tau lepton decay products
-  const reco::Candidate::Point& eventVertexPosition() const { return eventVertexPosition_; }
+  reco::Candidate::Point eventVertexPosition() const { return (eventVertexPosition_ + eventVertexPositionCorr_); }
 
   /// access to individual tau lepton decay "legs"
   const SVfitLegSolution& leg1() const { return leg1_; }
@@ -32,6 +36,7 @@ class SVfitDiTauSolution
   /// position of primary event vertex (tau lepton production vertex);
   /// refitted by SVfit algorithm after excluding from fit tracks associated to tau lepton decay products
   const reco::Candidate::Point eventVertexPosition_;
+  const reco::Candidate::Point eventVertexPositionCorr_;
 
   /// individual tau lepton decay "legs"
   const SVfitLegSolution& leg1_;
