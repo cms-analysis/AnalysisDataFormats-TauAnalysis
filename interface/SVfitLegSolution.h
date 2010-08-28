@@ -15,6 +15,10 @@ class SVfitLegSolution
   /// access to polarization hypothesis used by SVfit in reconstruction of this solution
   polarizationHypothesisType polarizationHypothesis() const { return polarizationHypothesis_; }
 
+  /// access to momentum of visible + invisible decay products
+  /// in laboratory frame
+  reco::Candidate::LorentzVector p4() const { return (p4Vis_ + p4Invis_); }
+
   /// access to momentum of visible decay products,
   /// in laboratory and tau lepton rest-frame
   const reco::Candidate::LorentzVector& p4Vis() const { return p4Vis_; }
@@ -22,7 +26,7 @@ class SVfitLegSolution
 
   /// access to momentum of invisible decay products (neutrinos produced in tau decay);
   /// reconstructed by SVfit algorithm,
-  /// in laboratory and tau lepton rest-frame
+  /// in laboratory and tau lepton rest-frame    
   const reco::Candidate::LorentzVector& p4Invis() const { return p4Invis_; }
   const reco::Candidate::LorentzVector& p4InvisRestFrame() const { return p4InvisRestFrame_; }
 
