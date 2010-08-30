@@ -16,6 +16,9 @@ class SVfitLegSolution
   /// in laboratory frame
   reco::Candidate::LorentzVector p4() const { return (p4Vis_ + p4Invis_); }
 
+  /// access ratio of visible to total tau lepton momentum
+  double x() const { return p4Vis_.energy()/(p4Vis_.energy() + p4Invis_.energy()); }
+
   /// access to momentum of visible decay products,
   /// in laboratory and tau lepton rest-frame
   const reco::Candidate::LorentzVector& p4Vis() const { return p4Vis_; }
@@ -27,8 +30,8 @@ class SVfitLegSolution
   const reco::Candidate::LorentzVector& p4Invis() const { return p4Invis_; }
   const reco::Candidate::LorentzVector& p4InvisRestFrame() const { return p4InvisRestFrame_; }
 
-  /// access to position of secondary vertex (tau lepton decay vertex);
-  /// reconstructed by SVfit algorithm
+  /// access to position of secondary vertex (tau lepton decay vertex) relative to production vertex;
+  /// reconstructed by SVfit algorithm 
   const reco::Candidate::Vector& tauFlightPath() const { return tauFlightPath_; }
 
   /// access to polarization hypothesis used by SVfit in reconstruction of this solution
@@ -36,10 +39,9 @@ class SVfitLegSolution
 
   double cosThetaRest() const { return p4VisRestFrame().Vect().Unit().Dot(tauFlightPath_.Unit()); }
 
- private:
-
   template<typename T1, typename T2> friend class SVfitAlgorithm;
 
+ private:
   /// polarization hypothesis used by SVfit in reconstruction of this solution
   polarizationHypothesisType polarizationHypothesis_;
 
@@ -54,7 +56,7 @@ class SVfitLegSolution
   reco::Candidate::LorentzVector p4Invis_; 
   reco::Candidate::LorentzVector p4InvisRestFrame_; 
 
-  /// position of reconstructed tau lepton decay vertex;
+  /// position of reconstructed tau lepton decay vertex relative to production vertex;
   /// reconstructed by SVfit algorithm
   reco::Candidate::Vector tauFlightPath_;
 };
