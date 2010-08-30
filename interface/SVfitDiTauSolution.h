@@ -2,13 +2,9 @@
 #define AnalysisDataFormats_TauAnalysis_SVfitDiTauSolution_h
 
 #include "AnalysisDataFormats/TauAnalysis/interface/SVfitLegSolution.h"
-#include "AnalysisDataFormats/TauAnalysis/interface/tauAnalysisAuxFunctions.h"
-
 #include "DataFormats/Candidate/interface/Candidate.h"
 
 #include <string>
-
-using namespace TauAnalysis_namespace;
 
 class SVfitDiTauSolution 
 {
@@ -25,10 +21,23 @@ class SVfitDiTauSolution
   const SVfitLegSolution& leg1() const { return leg1_; }
   const SVfitLegSolution& leg2() const { return leg2_; }
 
+  /// Secondary decay vertex of leg 1
+  reco::Candidate::Point leg1DecayVertex() const { return eventVertexPosition() + leg2().tauFlightPath(); }
+  /// Secondary decay vertex of leg 2
+  reco::Candidate::Point leg2DecayVertex() const { return eventVertexPosition() + leg1().tauFlightPath(); }
+
+  /// DiTau system p4
+  reco::Candidate::LorentzVector p4() const { return leg1_.p4() + leg2_.p4(); }
+
+  /// DiTau invisible p4
+  reco::Candidate::LorentzVector p4Invis() const { return leg1_.p4Invis() + leg2_.p4Invis(); }
+
   /// access likelihood values of all/individual plugins
   /// used by SVfit to reconstruct this solution
   double logLikelihood() const;
   double logLikelihood(const std::string&) const;
+
+  template<typename T1, typename T2> friend class SVfitAlgorithm;
 
   std::string polarizationHypothesisName() const
   {
@@ -46,13 +55,11 @@ class SVfitDiTauSolution
     else return "Unknown";
   }
 
-  template<typename T1, typename T2> friend class SVfitAlgorithm;
-
  private:
   /// position of primary event vertex (tau lepton production vertex);
   /// refitted by SVfit algorithm after excluding from fit tracks associated to tau lepton decay products
   reco::Candidate::Point eventVertexPosition_;
-  reco::Candidate::Point eventVertexPositionCorr_;
+  reco::Candidate::Vector eventVertexPositionCorr_;
 
   /// individual tau lepton decay "legs"
   SVfitLegSolution leg1_;
