@@ -1,7 +1,12 @@
 #ifndef AnalysisDataFormats_TauAnalysis_SVfitDiTauSolution_h
 #define AnalysisDataFormats_TauAnalysis_SVfitDiTauSolution_h
 
+#include "DataFormats/Candidate/interface/Candidate.h"
+#include "DataFormats/CLHEP/interface/AlgebraicObjects.h"
+
 #include "AnalysisDataFormats/TauAnalysis/interface/SVfitLegSolution.h"
+#include "AnalysisDataFormats/TauAnalysis/interface/tauAnalysisAuxFunctions.h"
+
 #include "DataFormats/Candidate/interface/Candidate.h"
 
 #include <string>
@@ -15,27 +20,34 @@ class SVfitDiTauSolution
 
   /// access to position of primary event vertex (tau lepton production vertex);
   /// refitted by SVfit algorithm after excluding from fit tracks associated to tau lepton decay products
-  reco::Candidate::Point eventVertexPosition() const { return (eventVertexPosition_ + eventVertexPositionCorr_); }
+  ///
+  /// NB: error on position returned by eventVertexErrSVrefitted method not 100% correct,
+  ///     as uncertainty on "correction" to primary event vertex position
+  ///     determined by SVfit algorithm is not taken into account
+  ///
+  reco::Candidate::Point eventVertexPosSVrefitted() const { return (eventVertexPosition_ + eventVertexPositionCorr_); }
+  const AlgebraicSymMatrix& eventVertexErrSVrefitted() const { return eventVertexPositionErr_; } 
+  
+  /// access to momentum of both tau lepton decay "legs"
+  reco::Candidate::LorentzVector p4() const { return (leg1_.p4() + leg2_.p4()); }
+  reco::Candidate::LorentzVector p4Vis() const { return leg1_.p4Vis() + leg2_.p4Vis(); }
+  reco::Candidate::LorentzVector p4Invis() const { return leg1_.p4Invis() + leg2_.p4Invis(); }
 
   /// access to individual tau lepton decay "legs"
   const SVfitLegSolution& leg1() const { return leg1_; }
   const SVfitLegSolution& leg2() const { return leg2_; }
 
-  /// Secondary decay vertex of leg 1
-  reco::Candidate::Point leg1DecayVertex() const { return eventVertexPosition() + leg2().tauFlightPath(); }
-  /// Secondary decay vertex of leg 2
-  reco::Candidate::Point leg2DecayVertex() const { return eventVertexPosition() + leg1().tauFlightPath(); }
-
-  /// DiTau system p4
-  reco::Candidate::LorentzVector p4() const { return leg1_.p4() + leg2_.p4(); }
-
-  /// DiTau invisible p4
-  reco::Candidate::LorentzVector p4Invis() const { return leg1_.p4Invis() + leg2_.p4Invis(); }
+  /// access position of tau lepton decay vertices
+  reco::Candidate::Point leg1DecayVertex() const { return eventVertexPosSVrefitted() + leg1().tauFlightPath(); }
+  reco::Candidate::Point leg2DecayVertex() const { return eventVertexPosSVrefitted() + leg2().tauFlightPath(); }
 
   /// access likelihood values of all/individual plugins
   /// used by SVfit to reconstruct this solution
   double logLikelihood() const;
   double logLikelihood(const std::string&) const;
+
+  bool isValidSolution() const { return (minuitStatus_ == 1); }
+  int minuitStatus() const { return minuitStatus_; }
 
   template<typename T1, typename T2> friend class SVfitAlgorithm;
 
@@ -59,6 +71,7 @@ class SVfitDiTauSolution
   /// position of primary event vertex (tau lepton production vertex);
   /// refitted by SVfit algorithm after excluding from fit tracks associated to tau lepton decay products
   reco::Candidate::Point eventVertexPosition_;
+  AlgebraicSymMatrix eventVertexPositionErr_;
   reco::Candidate::Vector eventVertexPositionCorr_;
 
   /// individual tau lepton decay "legs"
