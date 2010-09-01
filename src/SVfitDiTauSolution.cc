@@ -3,11 +3,13 @@
 #include "FWCore/MessageLogger/interface/MessageLogger.h"
 
 SVfitDiTauSolution::SVfitDiTauSolution()
+  : eventVertexIsValid_(false)
 {}
 
 SVfitDiTauSolution::SVfitDiTauSolution(SVfitLegSolution::polarizationHypothesisType leg1PolarizationHypothesis, 
 				       SVfitLegSolution::polarizationHypothesisType leg2PolarizationHypothesis)
-  : leg1_(leg1PolarizationHypothesis),
+  : eventVertexIsValid_(false),
+    leg1_(leg1PolarizationHypothesis),
     leg2_(leg2PolarizationHypothesis)
 {}
 
@@ -38,6 +40,26 @@ double SVfitDiTauSolution::logLikelihood(const std::string& plugin) const
       << " No plugin of name = " << plugin << " was used to reconstruct this solution !!";
     return -1.;
   }
+}
+
+//
+//-------------------------------------------------------------------------------
+//
+
+std::ostream& operator<<(std::ostream& stream, const SVfitDiTauSolution& solution) 
+{
+  stream << "<SVfitDiTauSolution::print>:" << std::endl;
+  stream << " isValid = " << solution.isValidSolution() << ": log-likelihood = " << solution.logLikelihood() << std::endl;
+  stream << " (status of Minuit fit = " << solution.minuitStatus() << ")" << std::endl;
+  stream << " Pt = " << solution.p4().pt() << std::endl;
+  reco::Candidate::LorentzVector leg1P4 = solution.leg1().p4();
+  stream << " leg 1: Pt = " << leg1P4.pt() << ", eta = " << leg1P4.eta() << ", phi = " << leg1P4.phi() << std::endl;  
+  stream << " (x1 = " << solution.leg1().x() << ", mScale1 = " << solution.leg1().p4InvisRestFrame().mass() << ")" << std::endl;
+  reco::Candidate::LorentzVector leg2P4 = solution.leg2().p4();
+  stream << " leg 2: Pt = " << leg2P4.pt() << ", eta = " << leg2P4.eta() << ", phi = " << leg2P4.phi() << std::endl;  
+  stream << " (x2 = " << solution.leg2().x() << ", mScale2 = " << solution.leg2().p4InvisRestFrame().mass() << ")" << std::endl;
+  stream << " M = " << solution.p4().mass() << std::endl;
+  return stream;
 }
 
 
