@@ -10,6 +10,7 @@
 #include "DataFormats/Candidate/interface/Candidate.h"
 
 #include <string>
+#include <iostream>
 
 class SVfitDiTauSolution 
 {
@@ -25,6 +26,7 @@ class SVfitDiTauSolution
   ///     as uncertainty on "correction" to primary event vertex position
   ///     determined by SVfit algorithm is not taken into account
   ///
+  bool eventVertexSVrefittedIsValid() const { return eventVertexIsValid_; }
   reco::Candidate::Point eventVertexPosSVrefitted() const { return (eventVertexPosition_ + eventVertexPositionCorr_); }
   const AlgebraicSymMatrix& eventVertexErrSVrefitted() const { return eventVertexPositionErr_; } 
   
@@ -46,7 +48,7 @@ class SVfitDiTauSolution
   double logLikelihood() const;
   double logLikelihood(const std::string&) const;
 
-  bool isValidSolution() const { return (minuitStatus_ == 1); }
+  bool isValidSolution() const { return (minuitStatus_ == 0); }
   int minuitStatus() const { return minuitStatus_; }
 
   template<typename T1, typename T2> friend class SVfitAlgorithm;
@@ -69,10 +71,11 @@ class SVfitDiTauSolution
 
  private:
   /// position of primary event vertex (tau lepton production vertex);
-  /// refitted by SVfit algorithm after excluding from fit tracks associated to tau lepton decay products
+  /// refitted by SVfit algorithm after excluding from fit tracks associated to tau lepton decay products  
   reco::Candidate::Point eventVertexPosition_;
   AlgebraicSymMatrix eventVertexPositionErr_;
   reco::Candidate::Vector eventVertexPositionCorr_;
+  bool eventVertexIsValid_;
 
   /// individual tau lepton decay "legs"
   SVfitLegSolution leg1_;
@@ -86,6 +89,8 @@ class SVfitDiTauSolution
   /// (1 = fit suceeded to converge, 0 = fit failed to converged)
   int minuitStatus_;
 };
+
+std::ostream& operator<<(std::ostream& stream, const SVfitDiTauSolution& solution);
 
 #endif
 
