@@ -9,6 +9,8 @@
 
 #include "DataFormats/Candidate/interface/Candidate.h"
 
+#include <TMath.h>
+
 #include <string>
 #include <iostream>
 
@@ -34,6 +36,17 @@ class SVfitDiTauSolution
   reco::Candidate::LorentzVector p4() const { return (leg1_.p4() + leg2_.p4()); }
   reco::Candidate::LorentzVector p4Vis() const { return leg1_.p4Vis() + leg2_.p4Vis(); }
   reco::Candidate::LorentzVector p4Invis() const { return leg1_.p4Invis() + leg2_.p4Invis(); }
+
+  /// access to reconstructed invariant mass
+  double mass() const { return p4().mass(); }
+  
+  /// access flag indicating if estimats for uncertainties are available
+  bool hasErrorEstimates() const { return hasErrorEstimates_; }
+
+  /// access uncertainty on reconstructed mass
+  double massErrUp() const { return massErrUp_; }
+  double massErrDown() const { return massErrDown_; }
+  double massErr() const { return TMath::Sqrt(0.5*(massErrUp()*massErrUp() + massErrDown()*massErrDown())); }
 
   /// access to individual tau lepton decay "legs"
   const SVfitLegSolution& leg1() const { return leg1_; }
@@ -88,6 +101,13 @@ class SVfitDiTauSolution
   /// convergence status of Minuit log-likelihood minimization
   /// (1 = fit suceeded to converge, 0 = fit failed to converged)
   int minuitStatus_;
+
+  /// flag indicating if estimats for uncertainties are available
+  bool hasErrorEstimates_; 
+
+  /// uncertainty on reconstructed mass
+  double massErrUp_; 
+  double massErrDown_; 
 };
 
 std::ostream& operator<<(std::ostream& stream, const SVfitDiTauSolution& solution);

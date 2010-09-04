@@ -54,11 +54,17 @@ std::ostream& operator<<(std::ostream& stream, const SVfitDiTauSolution& solutio
   stream << " Pt = " << solution.p4().pt() << std::endl;
   reco::Candidate::LorentzVector leg1P4 = solution.leg1().p4();
   stream << " leg 1: Pt = " << leg1P4.pt() << ", eta = " << leg1P4.eta() << ", phi = " << leg1P4.phi() << std::endl;  
-  stream << " (x1 = " << solution.leg1().x() << ", mScale1 = " << solution.leg1().p4InvisRestFrame().mass() << ")" << std::endl;
+  stream << " (x1 = " << solution.leg1().x();
+  if ( solution.leg1().hasErrorEstimates() ) stream << " + " << solution.leg1().xErrUp() << " - " << solution.leg1().xErrDown();
+  stream << ", mScale1 = " << solution.leg1().p4InvisRestFrame().mass() << ")" << std::endl;
   reco::Candidate::LorentzVector leg2P4 = solution.leg2().p4();
   stream << " leg 2: Pt = " << leg2P4.pt() << ", eta = " << leg2P4.eta() << ", phi = " << leg2P4.phi() << std::endl;  
-  stream << " (x2 = " << solution.leg2().x() << ", mScale2 = " << solution.leg2().p4InvisRestFrame().mass() << ")" << std::endl;
-  stream << " M = " << solution.p4().mass() << std::endl;
+  stream << " (x2 = " << solution.leg2().x();
+  if ( solution.leg2().hasErrorEstimates() ) stream << " + " << solution.leg2().xErrUp() << " - " << solution.leg2().xErrDown();
+  stream << ", mScale2 = " << solution.leg2().p4InvisRestFrame().mass() << ")" << std::endl;
+  stream << " M = " << solution.mass();
+  if ( solution.hasErrorEstimates() ) stream << " + " << solution.massErrUp() << " - " << solution.massErrDown();
+  stream << std::endl;
   return stream;
 }
 

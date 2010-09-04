@@ -3,6 +3,8 @@
 
 #include "DataFormats/Candidate/interface/Candidate.h"
 
+#include <TMath.h>
+
 class SVfitLegSolution 
 {
  public:
@@ -18,6 +20,14 @@ class SVfitLegSolution
 
   /// access ratio of visible to total tau lepton momentum
   double x() const { return p4Vis_.energy()/(p4Vis_.energy() + p4Invis_.energy()); }
+
+  /// access flag indicating if estimats for uncertainties are available
+  bool hasErrorEstimates() const { return hasErrorEstimates_; }
+
+  /// access uncertainty on reconstructed visible to total tau lepton momentum ratio
+  double xErrUp() const { return xErrUp_; }
+  double xErrDown() const { return xErrDown_; }
+  double xErr() const { return TMath::Sqrt(0.5*(xErrUp()*xErrUp() + xErrDown()*xErrDown())); }
 
   /// access to momentum of visible decay products,
   /// in laboratory and tau lepton rest-frame
@@ -59,6 +69,13 @@ class SVfitLegSolution
   /// position of reconstructed tau lepton decay vertex relative to production vertex;
   /// reconstructed by SVfit algorithm
   reco::Candidate::Vector tauFlightPath_;
+
+  /// flag indicating if estimats for uncertainties are available
+  bool hasErrorEstimates_; 
+
+  /// uncertainty on reconstructed visible to total tau lepton momentum ratio
+  double xErrUp_;
+  double xErrDown_;
 };
 
 #endif
