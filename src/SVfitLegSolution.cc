@@ -1,11 +1,13 @@
 #include "AnalysisDataFormats/TauAnalysis/interface/SVfitLegSolution.h"
 
 SVfitLegSolution::SVfitLegSolution()
-  : polarizationHypothesis_(kUnknown)
+  : polarizationHypothesis_(kUnknown),
+    hasErrorEstimates_(false)
 {}
 
 SVfitLegSolution::SVfitLegSolution(polarizationHypothesisType polarizationHypothesis)
-  : polarizationHypothesis_(polarizationHypothesis)
+  : polarizationHypothesis_(polarizationHypothesis),
+    hasErrorEstimates_(false)
 {}
 
 SVfitLegSolution::~SVfitLegSolution()

@@ -10,7 +10,8 @@ SVfitDiTauSolution::SVfitDiTauSolution(SVfitLegSolution::polarizationHypothesisT
 				       SVfitLegSolution::polarizationHypothesisType leg2PolarizationHypothesis)
   : eventVertexIsValid_(false),
     leg1_(leg1PolarizationHypothesis),
-    leg2_(leg2PolarizationHypothesis)
+    leg2_(leg2PolarizationHypothesis),
+    hasErrorEstimates_(false)
 {}
 
 SVfitDiTauSolution::~SVfitDiTauSolution()
