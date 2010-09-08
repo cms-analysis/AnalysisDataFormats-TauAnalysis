@@ -49,6 +49,14 @@ class SVfitLegSolution
 
   double cosThetaRest() const { return p4VisRestFrame().Vect().Unit().Dot(tauFlightPath_.Unit()); }
 
+  /// access to additional fit paramaters needed to fit 
+  ///  rho- --> pi- pi0 and a1- --> pi- pi0 pi0, a1- --> pi- pi+ pi- decays 
+  /// in case likelihood functions for decays of polarized tau leptons are used
+  double thetaVMrho() const { return thetaVMrho_; }
+  double thetaVMa1()  const { return thetaVMa1_;  }
+  double thetaVMa1r() const { return thetaVMa1r_; }
+  double phiVMa1r()   const { return phiVMa1r_;   }
+
   template<typename T1, typename T2> friend class SVfitAlgorithm;
 
  private:
@@ -76,6 +84,14 @@ class SVfitLegSolution
   /// uncertainty on reconstructed visible to total tau lepton momentum ratio
   double xErrUp_;
   double xErrDown_;
+
+  /// additional fit paramaters needed to fit 
+  ///  rho- --> pi- pi0 and a1- --> pi- pi0 pi0, a1- --> pi- pi+ pi- decays 
+  /// in case likelihood functions for decays of polarized tau leptons are used
+  double thetaVMrho_;
+  double thetaVMa1_;
+  double thetaVMa1r_;
+  double phiVMa1r_;
 };
 
 #endif
