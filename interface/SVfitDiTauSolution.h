@@ -58,8 +58,8 @@ class SVfitDiTauSolution
 
   /// access likelihood values of all/individual plugins
   /// used by SVfit to reconstruct this solution
-  double logLikelihood() const;
-  double logLikelihood(const std::string&) const;
+  double negLogLikelihood() const;
+  double negLogLikelihood(const std::string&) const;
 
   bool isValidSolution() const { return (minuitStatus_ == 0); }
   int minuitStatus() const { return minuitStatus_; }
@@ -96,7 +96,7 @@ class SVfitDiTauSolution
 
   /// likelihood values of individual plugins
   /// used by SVfit to reconstruct this solution
-  std::map<std::string, double> logLikelihoods_; // key = name of plugin; value = log(likelihood)
+  std::map<std::string, double> negLogLikelihoods_; // key = name of plugin; value = -log(likelihood)
 
   /// convergence status of Minuit log-likelihood minimization
   /// (1 = fit suceeded to converge, 0 = fit failed to converged)

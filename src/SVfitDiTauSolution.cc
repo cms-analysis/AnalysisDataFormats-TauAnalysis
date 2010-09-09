@@ -19,25 +19,25 @@ SVfitDiTauSolution::~SVfitDiTauSolution()
 // nothing to be done yet
 }
 
-double SVfitDiTauSolution::logLikelihood() const
+double SVfitDiTauSolution::negLogLikelihood() const
 {
-  double logLikelihoodSum = 0.;
+  double negLogLikelihoodSum = 0.;
 
-  for ( std::map<std::string, double>::const_iterator logLikelihood = logLikelihoods_.begin();
-	logLikelihood != logLikelihoods_.end(); ++logLikelihood ) {
-    logLikelihoodSum += logLikelihood->second;
+  for ( std::map<std::string, double>::const_iterator negLogLikelihood = negLogLikelihoods_.begin();
+	negLogLikelihood != negLogLikelihoods_.end(); ++negLogLikelihood ) {
+    negLogLikelihoodSum += negLogLikelihood->second;
   }
 
-  return logLikelihoodSum;
+  return negLogLikelihoodSum;
 }
  
-double SVfitDiTauSolution::logLikelihood(const std::string& plugin) const
+double SVfitDiTauSolution::negLogLikelihood(const std::string& plugin) const
 {
-  std::map<std::string, double>::const_iterator logLikelihood = logLikelihoods_.find(plugin);
-  if ( logLikelihood != logLikelihoods_.end() ) {
-    return logLikelihood->second;
+  std::map<std::string, double>::const_iterator negLogLikelihood = negLogLikelihoods_.find(plugin);
+  if ( negLogLikelihood != negLogLikelihoods_.end() ) {
+    return negLogLikelihood->second;
   } else {
-    edm::LogError ("SVfitDiTauSolution::logLikelihood") 
+    edm::LogError ("SVfitDiTauSolution::negLogLikelihood") 
       << " No plugin of name = " << plugin << " was used to reconstruct this solution !!";
     return -1.;
   }
@@ -50,7 +50,7 @@ double SVfitDiTauSolution::logLikelihood(const std::string& plugin) const
 std::ostream& operator<<(std::ostream& stream, const SVfitDiTauSolution& solution) 
 {
   stream << "<SVfitDiTauSolution::print>:" << std::endl;
-  stream << " isValid = " << solution.isValidSolution() << ": log-likelihood = " << solution.logLikelihood() << std::endl;
+  stream << " isValid = " << solution.isValidSolution() << ": log-likelihood = " << solution.negLogLikelihood() << std::endl;
   stream << " (status of Minuit fit = " << solution.minuitStatus() << ")" << std::endl;
   stream << " Pt = " << solution.p4().pt() << std::endl;
   reco::Candidate::LorentzVector leg1P4 = solution.leg1().p4();
