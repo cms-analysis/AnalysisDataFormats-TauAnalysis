@@ -59,6 +59,13 @@ class SVfitLegSolution
 
   template<typename T1, typename T2> friend class SVfitAlgorithm;
 
+  std::string polarizationHypothesisName() const
+  {
+    if      ( polarizationHypothesis_ == kLeftHanded  ) return "L";
+    else if ( polarizationHypothesis_ == kRightHanded ) return "R";
+    else return "Unknown";
+  }
+
  private:
   /// polarization hypothesis used by SVfit in reconstruction of this solution
   polarizationHypothesisType polarizationHypothesis_;
