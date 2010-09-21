@@ -29,9 +29,18 @@ class SVfitDiTauSolution
   ///     determined by SVfit algorithm is not taken into account
   ///
   bool eventVertexSVrefittedIsValid() const { return eventVertexIsValid_; }
-  reco::Candidate::Point eventVertexPosSVrefitted() const { return (eventVertexPosition_ + eventVertexPositionCorr_); }
-  const AlgebraicSymMatrix& eventVertexErrSVrefitted() const { return eventVertexPositionErr_; } 
+  AlgebraicVector3 eventVertexPosSVrefitted() const { return (eventVertexPosition_ + eventVertexPositionShift_); }
+  const AlgebraicSymMatrix33& eventVertexErrSVrefitted() const { return eventVertexPositionErr_; } 
+
+  const AlgebraicVector3& eventVertexShiftSVrefitted() const { return eventVertexPositionShift_; }
   
+  double leg1DecayDistance() const { 
+    return TauAnalysis_namespace::compDecayDistance(eventVertexPosSVrefitted(), leg1_.decayVertexPos()); 
+  }
+  double leg2DecayDistance() const { 
+    return TauAnalysis_namespace::compDecayDistance(eventVertexPosSVrefitted(), leg2_.decayVertexPos()); 
+  }
+
   /// access to momentum of both tau lepton decay "legs"
   reco::Candidate::LorentzVector p4() const { return (leg1_.p4() + leg2_.p4()); }
   reco::Candidate::LorentzVector p4Vis() const { return leg1_.p4Vis() + leg2_.p4Vis(); }
@@ -51,10 +60,6 @@ class SVfitDiTauSolution
   /// access to individual tau lepton decay "legs"
   const SVfitLegSolution& leg1() const { return leg1_; }
   const SVfitLegSolution& leg2() const { return leg2_; }
-
-  /// access position of tau lepton decay vertices
-  reco::Candidate::Point leg1DecayVertex() const { return eventVertexPosSVrefitted() + leg1().tauFlightPath(); }
-  reco::Candidate::Point leg2DecayVertex() const { return eventVertexPosSVrefitted() + leg2().tauFlightPath(); }
 
   /// access likelihood values of all/individual plugins
   /// used by SVfit to reconstruct this solution
@@ -85,9 +90,9 @@ class SVfitDiTauSolution
  private:
   /// position of primary event vertex (tau lepton production vertex);
   /// refitted by SVfit algorithm after excluding from fit tracks associated to tau lepton decay products  
-  reco::Candidate::Point eventVertexPosition_;
-  AlgebraicSymMatrix eventVertexPositionErr_;
-  reco::Candidate::Vector eventVertexPositionCorr_;
+  AlgebraicVector3 eventVertexPosition_;
+  AlgebraicSymMatrix33 eventVertexPositionErr_;
+  AlgebraicVector3 eventVertexPositionShift_;
   bool eventVertexIsValid_;
 
   /// individual tau lepton decay "legs"
