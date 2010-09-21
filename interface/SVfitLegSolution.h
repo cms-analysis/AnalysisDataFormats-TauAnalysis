@@ -2,6 +2,7 @@
 #define AnalysisDataFormats_TauAnalysis_SVfitLegSolution_h
 
 #include "DataFormats/Candidate/interface/Candidate.h"
+#include "DataFormats/CLHEP/interface/AlgebraicObjects.h"
 
 #include <TMath.h>
 
@@ -40,14 +41,14 @@ class SVfitLegSolution
   const reco::Candidate::LorentzVector& p4Invis() const { return p4Invis_; }
   const reco::Candidate::LorentzVector& p4InvisRestFrame() const { return p4InvisRestFrame_; }
 
-  /// access to position of secondary vertex (tau lepton decay vertex) relative to production vertex;
-  /// reconstructed by SVfit algorithm 
-  const reco::Candidate::Vector& tauFlightPath() const { return tauFlightPath_; }
+  /// access to position of secondary vertex (tau lepton decay vertex) 
+  const AlgebraicVector3& decayVertexPos() const { return decayVertexPos_; }
 
   /// access to polarization hypothesis used by SVfit in reconstruction of this solution
   polarizationHypothesisType polarizationHypothesis() const { return polarizationHypothesis_; }
 
-  double cosThetaRest() const { return p4VisRestFrame().Vect().Unit().Dot(tauFlightPath_.Unit()); }
+  /// access to decay angle in tau lepton rest frame
+  double thetaRest() const { return TMath::ACos(p4VisRestFrame().Vect().Unit().Dot(p4().Vect().Unit())); }
 
   /// access to additional fit paramaters needed to fit 
   ///  rho- --> pi- pi0 and a1- --> pi- pi0 pi0, a1- --> pi- pi+ pi- decays 
@@ -81,9 +82,8 @@ class SVfitLegSolution
   reco::Candidate::LorentzVector p4Invis_; 
   reco::Candidate::LorentzVector p4InvisRestFrame_; 
 
-  /// position of reconstructed tau lepton decay vertex relative to production vertex;
-  /// reconstructed by SVfit algorithm
-  reco::Candidate::Vector tauFlightPath_;
+  /// position of reconstructed tau lepton decay vertex
+  AlgebraicVector3 decayVertexPos_;
 
   /// flag indicating if estimats for uncertainties are available
   bool hasErrorEstimates_; 
