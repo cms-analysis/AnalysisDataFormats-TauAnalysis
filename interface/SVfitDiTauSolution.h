@@ -14,7 +14,7 @@
 #include <string>
 #include <iostream>
 
-class SVfitDiTauSolution 
+class SVfitDiTauSolution
 {
  public:
   SVfitDiTauSolution();
@@ -30,15 +30,15 @@ class SVfitDiTauSolution
   ///
   bool eventVertexSVrefittedIsValid() const { return eventVertexIsValid_; }
   AlgebraicVector3 eventVertexPosSVrefitted() const { return (eventVertexPosition_ + eventVertexPositionShift_); }
-  const AlgebraicSymMatrix33& eventVertexErrSVrefitted() const { return eventVertexPositionErr_; } 
+  const AlgebraicSymMatrix33& eventVertexErrSVrefitted() const { return eventVertexPositionErr_; }
 
   const AlgebraicVector3& eventVertexShiftSVrefitted() const { return eventVertexPositionShift_; }
-  
-  double leg1DecayDistance() const { 
-    return TauAnalysis_namespace::compDecayDistance(eventVertexPosSVrefitted(), leg1_.decayVertexPos()); 
+
+  double leg1DecayDistance() const {
+    return TauAnalysis_namespace::compDecayDistance(eventVertexPosSVrefitted(), leg1_.decayVertexPos());
   }
-  double leg2DecayDistance() const { 
-    return TauAnalysis_namespace::compDecayDistance(eventVertexPosSVrefitted(), leg2_.decayVertexPos()); 
+  double leg2DecayDistance() const {
+    return TauAnalysis_namespace::compDecayDistance(eventVertexPosSVrefitted(), leg2_.decayVertexPos());
   }
 
   /// access to momentum of both tau lepton decay "legs"
@@ -48,7 +48,7 @@ class SVfitDiTauSolution
 
   /// access to reconstructed invariant mass
   double mass() const { return p4().mass(); }
-  
+
   /// access flag indicating if estimats for uncertainties are available
   bool hasErrorEstimates() const { return hasErrorEstimates_; }
 
@@ -66,6 +66,10 @@ class SVfitDiTauSolution
   double negLogLikelihood() const;
   double negLogLikelihood(const std::string&) const;
 
+  const std::map<std::string, double>& negLogLikelihoods() const {
+    return negLogLikelihoods_;
+  }
+
   bool isValidSolution() const { return (minuitStatus_ == 0); }
   int minuitStatus() const { return minuitStatus_; }
 
@@ -75,21 +79,21 @@ class SVfitDiTauSolution
   {
     SVfitLegSolution::polarizationHypothesisType leg1PolarizationHypothesis = leg1_.polarizationHypothesis();
     SVfitLegSolution::polarizationHypothesisType leg2PolarizationHypothesis = leg2_.polarizationHypothesis();
-  
-    if      ( leg1PolarizationHypothesis == SVfitLegSolution::kLeftHanded  && 
+
+    if      ( leg1PolarizationHypothesis == SVfitLegSolution::kLeftHanded  &&
 	      leg2PolarizationHypothesis == SVfitLegSolution::kLeftHanded  ) return "LL";
-    else if ( leg1PolarizationHypothesis == SVfitLegSolution::kLeftHanded  && 
+    else if ( leg1PolarizationHypothesis == SVfitLegSolution::kLeftHanded  &&
               leg2PolarizationHypothesis == SVfitLegSolution::kRightHanded ) return "LR";
-    else if ( leg1PolarizationHypothesis == SVfitLegSolution::kRightHanded && 
+    else if ( leg1PolarizationHypothesis == SVfitLegSolution::kRightHanded &&
 	      leg2PolarizationHypothesis == SVfitLegSolution::kLeftHanded  ) return "RL";
-    else if ( leg1PolarizationHypothesis == SVfitLegSolution::kRightHanded  && 
+    else if ( leg1PolarizationHypothesis == SVfitLegSolution::kRightHanded  &&
               leg2PolarizationHypothesis == SVfitLegSolution::kRightHanded ) return "RR";
     else return "Unknown";
   }
 
  private:
   /// position of primary event vertex (tau lepton production vertex);
-  /// refitted by SVfit algorithm after excluding from fit tracks associated to tau lepton decay products  
+  /// refitted by SVfit algorithm after excluding from fit tracks associated to tau lepton decay products
   AlgebraicVector3 eventVertexPosition_;
   AlgebraicSymMatrix33 eventVertexPositionErr_;
   AlgebraicVector3 eventVertexPositionShift_;
@@ -108,11 +112,11 @@ class SVfitDiTauSolution
   int minuitStatus_;
 
   /// flag indicating if estimats for uncertainties are available
-  bool hasErrorEstimates_; 
+  bool hasErrorEstimates_;
 
   /// uncertainty on reconstructed mass
-  double massErrUp_; 
-  double massErrDown_; 
+  double massErrUp_;
+  double massErrDown_;
 };
 
 std::ostream& operator<<(std::ostream& stream, const SVfitDiTauSolution& solution);
