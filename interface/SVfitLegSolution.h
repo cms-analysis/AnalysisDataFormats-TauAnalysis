@@ -3,10 +3,13 @@
 
 #include "DataFormats/Candidate/interface/Candidate.h"
 #include "DataFormats/CLHEP/interface/AlgebraicObjects.h"
+#include "DataFormats/VertexReco/interface/Vertex.h"
+#include "DataFormats/TrackReco/interface/Track.h"
+#include "DataFormats/TrackReco/interface/TrackFwd.h"
 
 #include <TMath.h>
 
-class SVfitLegSolution 
+class SVfitLegSolution
 {
  public:
   enum polarizationHypothesisType { kLeftHanded, kRightHanded, kUnknown };
@@ -14,7 +17,7 @@ class SVfitLegSolution
   SVfitLegSolution();
   SVfitLegSolution(polarizationHypothesisType);
   ~SVfitLegSolution();
-  
+
   /// access to momentum of visible + invisible decay products
   /// in laboratory frame
   reco::Candidate::LorentzVector p4() const { return (p4Vis_ + p4Invis_); }
@@ -37,11 +40,11 @@ class SVfitLegSolution
 
   /// access to momentum of invisible decay products (neutrinos produced in tau decay);
   /// reconstructed by SVfit algorithm,
-  /// in laboratory and tau lepton rest-frame    
+  /// in laboratory and tau lepton rest-frame
   const reco::Candidate::LorentzVector& p4Invis() const { return p4Invis_; }
   const reco::Candidate::LorentzVector& p4InvisRestFrame() const { return p4InvisRestFrame_; }
 
-  /// access to position of secondary vertex (tau lepton decay vertex) 
+  /// access to position of secondary vertex (tau lepton decay vertex)
   const AlgebraicVector3& decayVertexPos() const { return decayVertexPos_; }
 
   /// access to polarization hypothesis used by SVfit in reconstruction of this solution
@@ -50,8 +53,15 @@ class SVfitLegSolution
   /// access to decay angle in tau lepton rest frame
   double thetaRest() const { return TMath::ACos(p4VisRestFrame().Vect().Unit().Dot(p4().Vect().Unit())); }
 
-  /// access to additional fit paramaters needed to fit 
-  ///  rho- --> pi- pi0 and a1- --> pi- pi0 pi0, a1- --> pi- pi+ pi- decays 
+  /// The tracks associated to the leg.
+  const std::vector<reco::TrackBaseRef>& tracks() const { return tracks_; }
+
+  /// Return the secondary vertex (for three prong taus) returned by a direct
+  /// vertex fit of the associated tracks.
+  const reco::Vertex& recoDecayVertex() const { return recoVertex_; }
+
+  /// access to additional fit paramaters needed to fit
+  ///  rho- --> pi- pi0 and a1- --> pi- pi0 pi0, a1- --> pi- pi+ pi- decays
   /// in case likelihood functions for decays of polarized tau leptons are used
   double thetaVMrho() const { return thetaVMrho_; }
   double thetaVMa1()  const { return thetaVMa1_;  }
@@ -79,21 +89,24 @@ class SVfitLegSolution
   /// momentum of invisible decay products (neutrinos produced in tau decay);
   /// reconstructed by SVfit algorithm,
   /// in laboratory and tau lepton rest-frame
-  reco::Candidate::LorentzVector p4Invis_; 
-  reco::Candidate::LorentzVector p4InvisRestFrame_; 
+  reco::Candidate::LorentzVector p4Invis_;
+  reco::Candidate::LorentzVector p4InvisRestFrame_;
 
   /// position of reconstructed tau lepton decay vertex
   AlgebraicVector3 decayVertexPos_;
 
   /// flag indicating if estimats for uncertainties are available
-  bool hasErrorEstimates_; 
+  bool hasErrorEstimates_;
 
   /// uncertainty on reconstructed visible to total tau lepton momentum ratio
   double xErrUp_;
   double xErrDown_;
 
-  /// additional fit paramaters needed to fit 
-  ///  rho- --> pi- pi0 and a1- --> pi- pi0 pi0, a1- --> pi- pi+ pi- decays 
+  std::vector<reco::TrackBaseRef> tracks_;
+  reco::Vertex recoVertex_;
+
+  /// additional fit paramaters needed to fit
+  ///  rho- --> pi- pi0 and a1- --> pi- pi0 pi0, a1- --> pi- pi+ pi- decays
   /// in case likelihood functions for decays of polarized tau leptons are used
   double thetaVMrho_;
   double thetaVMa1_;
