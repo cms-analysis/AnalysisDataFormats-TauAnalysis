@@ -41,6 +41,20 @@ class SVfitDiTauSolution
     return TauAnalysis_namespace::compDecayDistance(eventVertexPosSVrefitted(), leg2_.decayVertexPos());
   }
 
+  reco::Candidate::Vector leg1FlightPath() const {
+    return reco::Candidate::Vector(
+        leg1_.decayVertexPos().At(0) - eventVertexPosSVrefitted().At(0),
+        leg1_.decayVertexPos().At(1) - eventVertexPosSVrefitted().At(1),
+        leg1_.decayVertexPos().At(2) - eventVertexPosSVrefitted().At(2));
+  }
+
+  reco::Candidate::Vector leg2FlightPath() const {
+    return reco::Candidate::Vector(
+        leg2_.decayVertexPos().At(0) - eventVertexPosSVrefitted().At(0),
+        leg2_.decayVertexPos().At(1) - eventVertexPosSVrefitted().At(1),
+        leg2_.decayVertexPos().At(2) - eventVertexPosSVrefitted().At(2));
+  }
+
   /// access to momentum of both tau lepton decay "legs"
   reco::Candidate::LorentzVector p4() const { return (leg1_.p4() + leg2_.p4()); }
   reco::Candidate::LorentzVector p4Vis() const { return leg1_.p4Vis() + leg2_.p4Vis(); }
