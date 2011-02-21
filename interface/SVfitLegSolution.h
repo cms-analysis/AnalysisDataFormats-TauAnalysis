@@ -69,6 +69,7 @@ class SVfitLegSolution
   double phiVMa1r()   const { return phiVMa1r_;   }
 
   template<typename T1, typename T2> friend class SVfitAlgorithm;
+  template<typename T> friend class SVfitAlgorithmWtauNu;
 
   std::string polarizationHypothesisName() const
   {
