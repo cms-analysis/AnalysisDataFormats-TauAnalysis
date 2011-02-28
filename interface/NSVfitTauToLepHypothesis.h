@@ -7,6 +7,11 @@ template <typename T>
 class NSVfitTauToLepHypothesis : public NSVfitSingleParticleHypothesisBase
 {
  public:
+  NSVfitTauToLepHypothesis() {}
+  NSVfitTauToLepHypothesis(const edm::Ptr<reco::Candidate>& particle, const std::string& name, int barcode) 
+    : NSVfitSingleParticleHypothesisBase(particle, name, barcode)
+  {}
+  ~NSVfitTauToLepHypothesis() {}
 
   /// decay angle in tau lepton rest-frame
   double decay_angle_rf() const { return decay_angle_rf_; }
@@ -19,7 +24,6 @@ class NSVfitTauToLepHypothesis : public NSVfitSingleParticleHypothesisBase
   friend class NSVfitTauToLepBuilder;
 
  private:
-
   /// decay angle in tau lepton rest-frame
   double decay_angle_rf_;
 
