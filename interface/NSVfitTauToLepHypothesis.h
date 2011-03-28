@@ -11,15 +11,19 @@ class NSVfitTauToLepHypothesis : public NSVfitTauDecayHypothesis
   NSVfitTauToLepHypothesis(const edm::Ptr<reco::Candidate>& particle, const std::string& name, int barcode)
     : NSVfitTauDecayHypothesis(particle, name, barcode)
   {}
-  ~NSVfitTauToLepHypothesis() {}
-  virtual NSVfitTauDecayHypothesis* clone() const { return new NSVfitTauToLepHypothesis(*this); }
   NSVfitTauToLepHypothesis(const NSVfitTauToLepHypothesis& bluePrint)
-    : NSVfitTauDecayHypothesis(bluePrint) {}
+    : NSVfitTauDecayHypothesis(bluePrint) 
+  {}
+  ~NSVfitTauToLepHypothesis() {}
+
+  virtual NSVfitTauDecayHypothesis* clone() const { return new NSVfitTauToLepHypothesis(*this); }
+
   virtual NSVfitTauDecayHypothesis& operator=(const NSVfitTauToLepHypothesis& bluePrint)
   {
     NSVfitTauDecayHypothesis::operator =(bluePrint);
     return (*this);
   }
+
   template<typename T_type> friend class NSVfitTauToLepBuilder;
 };
 
@@ -27,6 +31,6 @@ class NSVfitTauToLepHypothesis : public NSVfitTauDecayHypothesis
 #include "DataFormats/PatCandidates/interface/Muon.h"
 
 typedef NSVfitTauToLepHypothesis<pat::Electron> NSVfitTauToElecHypothesis;
-typedef NSVfitTauToLepHypothesis<pat::Muon>     NSVfitTauToMuHypothesis;
+typedef NSVfitTauToLepHypothesis<pat::Muon> NSVfitTauToMuHypothesis;
 
 #endif
