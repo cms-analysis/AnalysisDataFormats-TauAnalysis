@@ -15,7 +15,7 @@ NSVfitTauDecayHypothesis::NSVfitTauDecayHypothesis(const NSVfitTauDecayHypothesi
     polarization_(bluePrint.polarization_)
 {}
 
-NSVfitSingleParticleHypothesisBase& NSVfitTauDecayHypothesis::operator =(const NSVfitTauDecayHypothesis& bluePrint)
+NSVfitTauDecayHypothesis& NSVfitTauDecayHypothesis::operator =(const NSVfitTauDecayHypothesis& bluePrint)
 {
   NSVfitSingleParticleHypothesisBase::operator =(bluePrint);
   p4invis_rf_ = bluePrint.p4invis_rf_;

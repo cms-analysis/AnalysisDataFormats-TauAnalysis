@@ -11,7 +11,7 @@ NSVfitTauToHadHypothesis::NSVfitTauToHadHypothesis(const NSVfitTauToHadHypothesi
     fittedVertex_(bluePrint.fittedVertex_) 
 {}
 
-NSVfitTauDecayHypothesis& NSVfitTauToHadHypothesis::operator=(const NSVfitTauToHadHypothesis& bluePrint)
+NSVfitTauToHadHypothesis& NSVfitTauToHadHypothesis::operator=(const NSVfitTauToHadHypothesis& bluePrint)
 {
   NSVfitTauDecayHypothesis::operator=(bluePrint);
   decay_angle_VMrho_ = bluePrint.decay_angle_VMrho_;

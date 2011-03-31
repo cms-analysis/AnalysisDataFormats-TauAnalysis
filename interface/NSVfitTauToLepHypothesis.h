@@ -16,9 +16,9 @@ class NSVfitTauToLepHypothesis : public NSVfitTauDecayHypothesis
   {}
   ~NSVfitTauToLepHypothesis() {}
 
-  virtual NSVfitTauDecayHypothesis* clone() const { return new NSVfitTauToLepHypothesis(*this); }
+  virtual NSVfitTauToLepHypothesis* clone() const { return new NSVfitTauToLepHypothesis(*this); }
 
-  virtual NSVfitTauDecayHypothesis& operator=(const NSVfitTauToLepHypothesis& bluePrint)
+  virtual NSVfitTauToLepHypothesis<T>& operator=(const NSVfitTauToLepHypothesis& bluePrint)
   {
     NSVfitTauDecayHypothesis::operator =(bluePrint);
     return (*this);
