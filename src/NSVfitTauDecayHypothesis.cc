@@ -1,7 +1,8 @@
 #include "AnalysisDataFormats/TauAnalysis/interface/NSVfitTauDecayHypothesis.h"
 
 NSVfitTauDecayHypothesis::NSVfitTauDecayHypothesis(const NSVfitTauDecayHypothesis& bluePrint)
-  : NSVfitSingleParticleHypothesisBase(bluePrint),
+  : NSVfitTauDecayHypothesisBase(bluePrint),
+    tracks_(bluePrint.tracks_),
     p4invis_rf_(bluePrint.p4invis_rf_),
     p4vis_rf_(bluePrint.p4vis_rf_),
     p3Vis_unit_(bluePrint.p3Vis_unit_),
@@ -11,13 +12,13 @@ NSVfitTauDecayHypothesis::NSVfitTauDecayHypothesis(const NSVfitTauDecayHypothesi
     decayVertexPos_(bluePrint.decayVertexPos_),
     flightPath_(bluePrint.flightPath_),
     decayDistance_(bluePrint.decayDistance_),
-    decayMode_(bluePrint.decayMode_),
     polarization_(bluePrint.polarization_)
 {}
 
 NSVfitTauDecayHypothesis& NSVfitTauDecayHypothesis::operator =(const NSVfitTauDecayHypothesis& bluePrint)
 {
-  NSVfitSingleParticleHypothesisBase::operator =(bluePrint);
+  NSVfitTauDecayHypothesisBase::operator =(bluePrint);
+  tracks_ = bluePrint.tracks_;
   p4invis_rf_ = bluePrint.p4invis_rf_;
   p4vis_rf_ = bluePrint.p4vis_rf_;
   p3Vis_unit_ = bluePrint.p3Vis_unit_;
@@ -27,7 +28,6 @@ NSVfitTauDecayHypothesis& NSVfitTauDecayHypothesis::operator =(const NSVfitTauDe
   decayVertexPos_ = bluePrint.decayVertexPos_;
   flightPath_ = bluePrint.flightPath_;
   decayDistance_ = bluePrint.decayDistance_;
-  decayMode_ = bluePrint.decayMode_;
   polarization_ = bluePrint.polarization_;
   return (*this);
 }
