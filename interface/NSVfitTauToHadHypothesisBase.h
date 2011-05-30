@@ -3,23 +3,30 @@
 
 #include "AnalysisDataFormats/TauAnalysis/interface/NSVfitTauDecayHypothesisBase.h"
 
-#include "DataFormats/PatCandidates/interface/Tau.h"
-#include "DataFormats/CLHEP/interface/AlgebraicObjects.h"
-
 class NSVfitTauToHadHypothesisBase : public NSVfitTauDecayHypothesisBase
 {
  public:
 
   NSVfitTauToHadHypothesisBase() {}
   NSVfitTauToHadHypothesisBase(const edm::Ptr<reco::Candidate>& particle, const std::string& name, int barcode)
-    : NSVfitTauDecayHypothesisBase(particle, name, barcode)
+    : NSVfitSingleParticleHypothesisBase(particle, name, barcode)
   {}
-  NSVfitTauToHadHypothesisBase(const NSVfitTauToHadHypothesisBase&);
+  NSVfitTauToHadHypothesisBase(const NSVfitTauToHadHypothesisBase& bluePrint)
+    : NSVfitSingleParticleHypothesisBase(bluePrint),
+      NSVfitTauDecayHypothesisBase(bluePrint)
+  {}
   ~NSVfitTauToHadHypothesisBase() {}
 
-  virtual NSVfitTauToHadHypothesisBase* clone() const { return new NSVfitTauToHadHypothesisBase(*this); }
+  NSVfitSingleParticleHypothesisBase* clone() const { return new NSVfitTauToHadHypothesisBase(*this); }
+  NSVfitSingleParticleHypothesisBase* reduceToBase() const { 
+    return this->clone(); 
+  }
 
-  virtual NSVfitTauToHadHypothesisBase& operator=(const NSVfitTauToHadHypothesisBase&);
+  NSVfitTauToHadHypothesisBase& operator=(const NSVfitTauToHadHypothesisBase& bluePrint)
+  { 
+    NSVfitTauDecayHypothesisBase::operator=(bluePrint);
+    return (*this);
+  }
 };
 
 #endif

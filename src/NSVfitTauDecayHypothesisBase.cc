@@ -5,9 +5,9 @@ NSVfitTauDecayHypothesisBase::NSVfitTauDecayHypothesisBase(const NSVfitTauDecayH
     decayMode_(bluePrint.decayMode_)
 {}
 
-NSVfitTauDecayHypothesisBase& NSVfitTauDecayHypothesisBase::operator =(const NSVfitTauDecayHypothesisBase& bluePrint)
+NSVfitTauDecayHypothesisBase& NSVfitTauDecayHypothesisBase::operator=(const NSVfitTauDecayHypothesisBase& bluePrint)
 {
-  NSVfitSingleParticleHypothesisBase::operator =(bluePrint);
+  NSVfitSingleParticleHypothesisBase::operator=(bluePrint);
   decayMode_ = bluePrint.decayMode_;
   return (*this);
 }

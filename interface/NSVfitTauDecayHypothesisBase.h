@@ -18,6 +18,7 @@
 class NSVfitTauDecayHypothesisBase : virtual public NSVfitSingleParticleHypothesisBase
 {
  public:
+
   NSVfitTauDecayHypothesisBase() {}
   NSVfitTauDecayHypothesisBase(const edm::Ptr<reco::Candidate>& particle,
       const std::string& name, int barcode)
@@ -26,8 +27,7 @@ class NSVfitTauDecayHypothesisBase : virtual public NSVfitSingleParticleHypothes
   ~NSVfitTauDecayHypothesisBase() {}
   // Copy constructors
   NSVfitTauDecayHypothesisBase(const NSVfitTauDecayHypothesisBase&);
-  virtual NSVfitTauDecayHypothesisBase* clone() const { return new NSVfitTauDecayHypothesisBase(*this); }
-  virtual NSVfitTauDecayHypothesisBase& operator=(const NSVfitTauDecayHypothesisBase&);
+  NSVfitTauDecayHypothesisBase& operator=(const NSVfitTauDecayHypothesisBase&);
 
   /// tau lepton hadronic decay mode
   /// (as defined in DataFormats/TauReco/interface/PFTauDecayMode.h)

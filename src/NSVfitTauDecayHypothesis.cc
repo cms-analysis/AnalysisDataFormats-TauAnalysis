@@ -1,7 +1,8 @@
 #include "AnalysisDataFormats/TauAnalysis/interface/NSVfitTauDecayHypothesis.h"
 
 NSVfitTauDecayHypothesis::NSVfitTauDecayHypothesis(const NSVfitTauDecayHypothesis& bluePrint)
-  : NSVfitTauDecayHypothesisBase(bluePrint),
+  : NSVfitSingleParticleHypothesis(bluePrint),
+    NSVfitTauDecayHypothesisBase(bluePrint),
     tracks_(bluePrint.tracks_),
     p4invis_rf_(bluePrint.p4invis_rf_),
     p4vis_rf_(bluePrint.p4vis_rf_),
@@ -15,9 +16,10 @@ NSVfitTauDecayHypothesis::NSVfitTauDecayHypothesis(const NSVfitTauDecayHypothesi
     polarization_(bluePrint.polarization_)
 {}
 
-NSVfitTauDecayHypothesis& NSVfitTauDecayHypothesis::operator =(const NSVfitTauDecayHypothesis& bluePrint)
+NSVfitTauDecayHypothesis& NSVfitTauDecayHypothesis::operator=(const NSVfitTauDecayHypothesis& bluePrint)
 {
-  NSVfitTauDecayHypothesisBase::operator =(bluePrint);
+  NSVfitSingleParticleHypothesis::operator=(bluePrint);
+  NSVfitTauDecayHypothesisBase::operator=(bluePrint);
   tracks_ = bluePrint.tracks_;
   p4invis_rf_ = bluePrint.p4invis_rf_;
   p4vis_rf_ = bluePrint.p4vis_rf_;
