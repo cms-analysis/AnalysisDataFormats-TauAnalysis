@@ -49,18 +49,6 @@ namespace {
     edm::Wrapper<DiCandidatePairCollection> dummyDiCandidatePairCollectionWrapper;
 
     /// create dictionaries for 
-    ///  o edm::Ptr<pat::Electron> 
-    ///  o edm::Ptr<pat::Muon> 
-    ///  o edm::Ptr<pat::Tau>
-    ///  o edm::Ptr<pat::Jet>
-    ///  o edm::Ptr<pat::MET>
-    /// as these dictionaries are not yet created in DataFormats/PatCandidates/src/classes.h
-    edm::Ptr<pat::Electron> dummyPATElectronPtr;
-    edm::Ptr<pat::Muon> dummyPATMuonPtr;
-    edm::Ptr<pat::Tau> dummyPATTauPtr;
-    edm::Ptr<pat::Jet> dummyPATJetPtr;
-
-    /// create dictionaries for 
     ///  o edm::Ptr<reco::CaloJet>
     ///  o edm::Ptr<reco::PFJet>
     /// as these dictionaries are not yet created in DataFormats/JetReco/src/classes.h
