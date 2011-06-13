@@ -5,13 +5,6 @@
   <class name="edm::Wrapper<CompositePtrCandidateT1T2MEt<reco::Candidate, reco::Candidate>>"/>
   <class name="edm::Wrapper<std::vector<CompositePtrCandidateT1T2MEt<reco::Candidate, reco::Candidate> > >"/>
 
-  <!-- create dictionaries for edm::Ptr<pat::Electron>, edm::Ptr<pat::Muon>, edm::Ptr<pat::Tau>, edm::Ptr<pat::Jet> and edm::Ptr<pat::MET>
-       as these dictionaries are not yet created in DataFormats/PatCandidates/src/classes.h -->
-  <class name="edm::Ptr<pat::Electron>"/>
-  <class name="edm::Ptr<pat::Muon>"/>
-  <class name="edm::Ptr<pat::Tau>"/>
-  <class name="edm::Ptr<pat::Jet>"/>
-
   <!-- create dictionaries for edm::Ptr<reco::CaloJet> and edm::Ptr<reco::PFJet>
        as these dictionaries are not yet created in DataFormats/JetReco/src/classes.h -->
   <class name="edm::Ptr<reco::CaloJet>"/>
