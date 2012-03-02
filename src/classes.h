@@ -9,6 +9,8 @@
 #include "AnalysisDataFormats/TauAnalysis/interface/NSVfitTauToDaughtersHypothesisBaseT1T2.h"
 #include "AnalysisDataFormats/TauAnalysis/interface/NSVfitTauToHadHypothesis.h"
 
+#include "AnalysisDataFormats/TauAnalysis/interface/PFMEtSignCovMatrix.h"
+
 #include "DataFormats/Common/interface/AssociationVector.h"
 #include "DataFormats/Common/interface/RefProd.h"
 #include "DataFormats/Common/interface/Ref.h"
@@ -50,6 +52,11 @@ namespace {
     edm::Ptr<reco::Track> dummyTrackPtr;
     edm::Ptr<reco::GsfTrack> dummyGsfTrackPtr;
 
+    /// create disctionaries for MET covariance matrix
+    /// computed by (PF)MET significance algorithm
+    PFMEtSignCovMatrix dummyPFMEtSignCovMatrix;
+    edm::Wrapper<PFMEtSignCovMatrix> dummyPFMEtSignCovMatrixWrapper;
+
     /// create dictionaries for NSVfit solution data-formats
     NSVfitEventHypothesisBase dummyNSVfitEventHypothesisBase;
     NSVfitEventHypothesis dummyNSVfitEventHypothesis;
@@ -78,6 +85,5 @@ namespace {
     std::auto_ptr<TH1> dummyTH1Ptr;
     std::vector<NSVfitSingleParticleHypothesisBase*> dummyNSVfitSingleParticleHypothesisBasePtrCollection;
     edm::OwnVector<NSVfitSingleParticleHypothesisBase, edm::ClonePolicy<NSVfitSingleParticleHypothesisBase> >  dummyNSVfitSingleParticleHypothesisBaseOwnVector;
-
   };
 }
